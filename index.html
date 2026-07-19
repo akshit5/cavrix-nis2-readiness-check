@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAVRIX · NIS2 Compliance Check</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-glow"></div>
+    <div class="grid-overlay"></div>
+
+    <main class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">CAVRI<span>X</span></div>
+            <div class="header-badge">NIS2 Readiness Check</div>
+        </header>
+
+        <!-- Dynamic Content Area -->
+        <div id="app-view" class="view-container">
+            <!-- Will be populated by JS -->
+        </div>
+    </main>
+
+    <!-- Templates -->
+    <template id="tmpl-intro">
+        <div class="view-slide animate-in">
+            <div class="eyebrow">AI-Powered NIS2 Readiness Assessment</div>
+            <h1 class="title">Assess Your Organisation's NIS2 Readiness in Under 5 Minutes</h1>
+            <p class="subtitle">Answer a few simple questions about your organisation and receive a transparent readiness assessment based solely on the information you provide.</p>
+            
+            <button class="btn btn-primary" onclick="app.startCheck()">
+                Start Assessment
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+            <p class="disclaimer mt-6 text-muted">No data is stored. Your assessment runs locally in your browser.</p>
+        </div>
+    </template>
+
+    <template id="tmpl-step1">
+        <div class="view-slide animate-in">
+            <div class="step-indicator">Step 1 of 2 · Organisation Profile</div>
+            <h2 class="title-sm">Which sector best describes your organisation?</h2>
+            <div class="form-group mt-8">
+
+        <label class="form-label">Organisation Name (Optional)</label>
+
+        <input
+
+            id="input-company"
+
+            type="text"
+
+            class="form-input"
+
+            placeholder="e.g. Acme Manufacturing Ltd">
+
+    </div>
+            <div class="form-group mt-8">
+                <label class="form-label">Primary Sector (NIS2 Annex I & II)</label>
+                <div class="select-wrapper">
+                    <select id="input-sector" class="form-select">
+                        <option value="" disabled selected>Select a sector...</option>
+                        <option value="energy">Energy</option>
+                        <option value="transport">Transport</option>
+                        <option value="banking">Banking & Financial Market Infrastructure</option>
+                        <option value="health">Healthcare & Pharmaceuticals</option>
+                        <option value="water">Water Supply & Wastewater</option>
+                        <option value="digital_infra">Digital Infrastructure (Cloud, Data Centres, Telecommunications)</option>
+                          <option value="b2b_ict">B2B ICT Service Management</option>
+                          <option value="space">Space</option>
+                          <option value="postal">Postal & Courier Services</option>
+                          <option value="waste">Waste Management</option>
+                          <option value="chemicals">Chemicals</option>
+                          <option value="food">Food Production & Distribution</option>
+                          <option value="manufacturing">Manufacturing</option>
+                          <option value="digital_provider">Digital Service Providers (Online Marketplaces, Search Engines)</option>
+                          <option value="research">Research</option>
+                          <option value="none">None of the Above</option>
+                        </select>
+                    </div>
+                </div>
+
+            <h2 class="title-sm mt-10">Organisation Size</h2>
+            <div class="grid-2 mt-6">
+                <div class="form-group">
+                    <label class="form-label">Number of Employees (FTE)</label>
+                    <div class="select-wrapper">
+                        <select id="input-employees" class="form-select">
+                            <option value="" disabled selected>Select...</option>
+                            <option value="small">Fewer than 50 employees</option>
+                            <option value="medium">50-249 employees</option>
+                            <option value="large">250 or more employees</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Annual Revenue</label>
+                    <div class="select-wrapper">
+                        <select id="input-turnover" class="form-select">
+                            <option value="" disabled selected>Select...</option>
+                            <option value="small">Less than €10 million</option>
+                            <option value="medium">€10-50 million</option>
+                            <option value="large">More than €50 million</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions mt-10">
+    <button class="btn btn-secondary" onclick="app.render('intro')">
+        Back
+    </button>
+
+    <button class="btn btn-primary" onclick="app.submitStep1()">
+        Continue
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/>
+            <path d="m12 5 7 7-7 7"/>
+        </svg>
+    </button>
+</div>
+
+<div id="error-step1" class="error-text"></div>
+</div>
+</template>
+
+<template id="tmpl-step2">
+    <div class="view-slide animate-in">
+
+        <div class="step-indicator">
+            Step 2 of 2 · Security Measures
+        </div>
+
+        <h2 class="title-sm">
+            Which of the following security measures are currently <strong>documented and implemented</strong>?
+        </h2>
+
+        <p class="subtitle text-sm">
+            Only select measures that are formally documented and could be demonstrated during an audit.
+        </p>
+
+        <div class="checklist mt-6" id="measures-list">
+            <!-- Checkboxes populated via JS -->
+        </div>
+
+        <div class="actions mt-10">
+
+            <button class="btn btn-secondary" onclick="app.render('step1')">
+                Back
+            </button>
+
+            <button class="btn btn-primary" onclick="app.submitStep2()">
+                View Assessment
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v20"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+            </button>
+
+        </div>
+
+    </div>
+</template>
+
+    <template id="tmpl-results">
+        <div class="view-slide animate-in results-view">
+            <!-- Dynamic Result Header -->
+            <div id="res-header"></div>
+            
+            <div class="results-content mt-8">
+                <!-- Why section -->
+                <div class="res-block">
+                    <h3 class="res-heading">Assessment Summary</h3>
+                    <p id="res-rationale" class="res-text"></p>
+                </div>
+
+                <!-- Gap Analysis Section -->
+                <div id="res-gaps-container" class="res-block mt-8" style="display: none;">
+                    <h3 class="res-heading text-red">Identified Compliance Gaps</h3>
+                    <p class="res-text mb-4">Based on the information you provided, the following minimum security measures appear to be missing. <strong>These findings are intended as an initial readiness assessment and should be validated through a formal compliance review.</strong></p>
+                    <ul id="res-gaps-list" class="gap-list"></ul>
+                </div>
+
+                <!-- Covered Section -->
+                <div id="res-covered-container" class="res-block mt-8" style="display: none;">
+                    <h3 class="res-heading text-green">Implemented Security Measures</h3>
+                    <ul id="res-covered-list" class="covered-list"></ul>
+                </div>
+            </div>
+
+            <div class="cavrix-pitch mt-12">
+                <div class="pitch-content">
+                    <h3>Need help achieving NIS2 readiness?</h3>
+                    <p>CAVRIX helps organisations design, document, and manage their cybersecurity and compliance programmes through a single, integrated platform.</p>
+                </div>
+                <button class="btn btn-primary btn-sm">Book a Consultation</button>
+            </div>
+
+            <div class="actions mt-8 justify-center">
+                <button class="btn btn-ghost" onclick="app.render('intro')">Start a New Assessment</button>
+            </div>
+        </div>
+    </template>
+
+    <script src="app.js"></script>
+</body>
+</html>
