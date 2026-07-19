@@ -1,34 +1,96 @@
-# CAVRIX Case Study Deliverables
+# CAVRIX NIS2 Readiness Assessment
 
-This project contains the deliverables for the CAVRIX case study, an AI-native Managed IT, Cybersecurity, and Compliance platform targeting the German Mittelstand. 
+A lightweight web application built as part of the CAVRIX Founder Associate case study.
 
-## Structure
+The application helps organisations quickly assess whether they are likely to fall within the scope of the NIS2 Directive and identify potential cybersecurity compliance gaps based on their current security measures.
 
-```text
-cavrix-project/
-├── cavrix-founder-memo.html       # Print-ready, editorial version of the Founder Memo
-├── cavrix-founder-memo.md         # Markdown version of the Founder Memo
-├── README.md                      # This file
-└── cavrix-nis2-check/             # The Product Slice (Mini-App)
-    ├── index.html                 # Main application UI
-    ├── style.css                  # Premium dark-theme design system
-    └── app.js                     # Grounded NIS2 compliance logic engine
+---
+
+## Live Demo
+
+(Add your Vercel URL here after deployment)
+
+---
+
+## Features
+
+- NIS2 sector and size assessment
+- Organisation profile collection
+- Optional organisation name
+- Security measures checklist
+- Compliance gap analysis
+- References mapped to the German BSIG
+- Fully client-side (no backend required)
+
+---
+
+## Tech Stack
+
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- Vercel (Deployment)
+
+---
+
+## Project Structure
+
+```
+.
+├── index.html
+├── style.css
+├── app.js
+└── README.md
 ```
 
-## 1. The Founder Memo (`cavrix-founder-memo.html`)
-A sharp, honest one-page analysis of the business mechanics behind CAVRIX. 
-- **The Wedge:** Proposes a fixed-price **NIS2 Readiness Audit** as the entry point to capitalize on personal liability fear and generate the necessary asset map.
-- **The Moat:** Argues that AI alone is not a moat. The true moats are the **compliance ledger** (a documented audit trail) and the **operational memory** built into the platform over time.
-- **The Model:** Details how an AI-native approach flips the traditional 65-70% labor cost of an MSSP by using AI for triage and sharing specialist human oversight across clients.
+---
 
-## 2. The Product Slice (`cavrix-nis2-check/`)
-A minimal, grounded **"Are you NIS2-compliant?"** mini-check web application. 
+## Running Locally
 
-### How to use it:
-1. Open `cavrix-nis2-check/index.html` in any modern web browser.
-2. The application is completely local and runs on client-side JS (no backend required).
-3. **Test Path A (Affected):** Select "Verarbeitendes Gewerbe", "50-249 Mitarbeitende", and "10-50 Mio. €". Check only 1 or 2 boxes on the next page to see the red warning and precise gap list.
-4. **Test Path B (Unaffected):** Select an affected sector but choose "< 50 Mitarbeitende" and "< 10 Mio. €" to see the green safe status.
+Simply open `index.html` in any modern web browser.
+
+No installation, dependencies, or backend services are required.
+
+---
+
+## Example Test Paths
+
+### Likely In Scope
+
+- Sector: Manufacturing
+- Employees: 50–249
+- Annual Revenue: €10–50 Million
+- Select only a few implemented security measures
+
+Expected Result:
+
+- NIS2 Requirements Apply
+- Compliance gap report
+- Missing security controls with BSIG references
+
+### Likely Out of Scope
+
+- Sector: Manufacturing
+- Employees: Fewer than 50
+- Annual Revenue: Less than €10 Million
+
+Expected Result:
+
+- No Immediate NIS2 Obligation
+
+---
+
+## Compliance Logic
+
+The assessment follows the general NIS2 size threshold and maps security controls to the corresponding provisions of the German BSIG.
+
+The application is intended as an indicative readiness assessment and is **not** a substitute for legal or compliance advice.
+
+---
+
+## About
+
+This project was created as part of the CAVRIX Founder Associate Case Study.green safe status.
 
 ### Grounded Logic:
 Every output is directly mapped to the explicit requirements of **§ 30 Abs. 2 BSIG** and the size thresholds established by the NIS2UmsuCG (in force Dec 6, 2025). The app does not invent recommendations; it explicitly maps missing items back to the law.
