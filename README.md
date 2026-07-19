@@ -8,7 +8,7 @@ The application helps organisations quickly assess whether they are likely to fa
 
 ## Live Demo
 
-[(Add your Vercel URL here after deployment)](https://cavrix-nis2-readiness-check.vercel.app)
+[(CAVRIX NIS2)](https://cavrix-nis2-readiness-check.vercel.app)
 
 ---
 
